@@ -1,0 +1,8 @@
+<script>
+const worker = new Worker('worker.js');
+worker.addEventListener('message', (e) => {
+    const {start, end} = e.data;
+    console.warn(end - start);
+});
+
+</script>
