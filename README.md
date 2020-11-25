@@ -1,10 +1,12 @@
+# Full Cloning
+
 LibGit2 is unable to do shallow clone:
 
 [https://github.com/libgit2/libgit2/issues/3058](https://github.com/libgit2/libgit2/issues/3058)
 
 These comparisons were made using unmodified versions of `isomorphic-git@0.8.0` and `wasm-git@0.0.4` without using shallow cloning for either
 
-# Full Cloning
+`isomorphic-git` utilized BrowserJS's in-memory storage, while `wasm-git` utilized Emscripten's MEMFS, to try to keep things apples-to-apples
 
 ## Real World
 
@@ -45,3 +47,12 @@ These comparisons were made using unmodified versions of `isomorphic-git@0.8.0` 
 
 ![Initial request](./images/refs-nextjs.png)
 ![Second request](./images/git-upload-pack-nextjs.png)
+
+# Fetch Objects Only
+
+In order to run `fetch` only (without `checkout`, but without any mods to `fetch`), it took `isomorphic-git` 80s
+
+This makes me think that `fetch` also has expensive operations when it comes to expanding the packfile
+
+Once `modified-iso-demo` did an early return to prevent packfile expansion, this went down to 2s. This makes me think we should
+do _only_ the request on `isomorphic-git`, and do all of the packfile extraction in Rust
