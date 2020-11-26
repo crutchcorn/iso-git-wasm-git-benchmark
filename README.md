@@ -56,3 +56,16 @@ This makes me think that `fetch` also has expensive operations when it comes to 
 
 Once `modified-iso-demo` did an early return to prevent packfile expansion, this went down to 2s. This makes me think we should
 do _only_ the request on `isomorphic-git`, and do all of the packfile extraction in Rust
+
+## Comparison of `isomorphic-git` Node vs Web
+
+Because of the immense time difference of `10s` (iso-git on Node) vs `150s` (iso-git in Firefox), we wanted to make sure that the browser and Node were making requests at the same speed
+and the only major difference in speed was parsing that data
+
+This comparison only uses `isomorphic-git/http/web` vs `ismorphic-git/http/node` and requests both files directly
+
+The node version of the code lives under [`./iso-nodejs/fetch.js`](./iso-nodejs/fetch.js) while the browser version lives under [`./fetch-iso-demo-browser`](./fetch-iso-demo-browser)
+
+![](./images/fetch-comparisons.png)
+
+There seems to be negligable/no difference in the timing of the network request, only parsing

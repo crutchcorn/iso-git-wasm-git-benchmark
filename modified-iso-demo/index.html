@@ -14,6 +14,8 @@ BrowserFS.configure({ fs: "InMemory", options: {} }, function (err) {
         fs,
         http,
         dir,
+        singleBranch: true,
+        depth: 1,
         url: 'http://localhost:5000/vercel/next.js.git',
         onProgress(event) {
             console.log(event.phase, event.loaded / event.total);
