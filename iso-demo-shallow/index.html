@@ -1,0 +1,31 @@
+<script src="https://unpkg.com/browserfs@beta"></script>
+<script src="https://unpkg.com/isomorphic-git"></script>
+<script type="module">
+import http from 'https://unpkg.com/isomorphic-git@beta/http/web/index.js'
+
+BrowserFS.configure({ fs: "InMemory", options: {} }, function (err) {
+  if (err) return console.log(err);
+  console.error("IN MEMORY")
+  const fs = BrowserFS.BFSRequire("fs");
+
+    const dir = '/test-clone'
+    const start = performance.now();
+    git.clone({
+        fs,
+        http,
+        dir,
+        depth: 1,
+        singleBranch: true,
+        url: 'http://localhost:5000/vercel/next.js.git',
+        onProgress(event) {
+            // console.log(event.phase, event.loaded / event.total);
+        }
+    }).then(() => {
+        const end = performance.now()
+        console.error(end - start);
+    })
+
+});
+
+</script>
+<h1>Hello from isomorphic-git!</h1>

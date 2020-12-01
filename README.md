@@ -48,6 +48,15 @@ These comparisons were made using unmodified versions of `isomorphic-git@0.8.0` 
 ![Initial request](./images/refs-nextjs.png)
 ![Second request](./images/git-upload-pack-nextjs.png)
 
+### Shallow Clone
+
+- Isomorphic-git (in-memory) (shallow-clone)
+    - Time-to-clone: ~53 (FF) ~40s (chrome)
+
+** Requests **
+
+![Shallow clone](./shallow_clone_nextjs.png)
+
 # Fetch Objects Only
 
 In order to run `fetch` only (without `checkout`, but without any mods to `fetch`), it took `isomorphic-git` 80s
@@ -69,3 +78,17 @@ The node version of the code lives under [`./iso-nodejs/fetch.js`](./iso-nodejs/
 ![](./images/fetch-comparisons.png)
 
 There seems to be negligable/no difference in the timing of the network request, only parsing
+
+## Comparison of `nodegit` vs `isomorphic-git`
+
+`nodegit` (Unlimited depth, no single-branch)
+
+https://github.com/nodegit/nodegit/issues/1669
+
+» node .\server.js
+default: 23883.927ms
+
+`isomorphic-git` (Depth 1, single branch)
+
+» node .\server.js
+default: 14232.943ms
